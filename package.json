@@ -1,39 +1,33 @@
 {
-    "name": "@environment-safe/template",
-    "version": "0.0.2",
+    "name": "@environment-safe/sodium",
+    "version": "0.0.1",
     "type": "module",
     "main": "dist/index.mjs",
     "module": "src/index.mjs",
     "commonjs": "dist/index.cjs",
+    "browser": "dist/browserify/index.mjs",
     "exports": {
         ".": {
-            "import": "./src/index.mjs",
-            "require": "./dist/index.cjs"
+            "import": "./src/index.mjs"
         },
         "./package.json": {
-            "import": "./package.json",
-            "require": "./package.json"
+            "import": "./package.json"
         },
         "./src/index.mjs": {
-            "import": "./src/index.mjs",
-            "require": "./dist/index.cjs"
-        },
-        "./dist/index.cjs": {
-            "import": "./src/index.mjs",
-            "require": "./dist/index.cjs"
+            "import": "./src/index.mjs"
         }
     },
-    "homepage": "https://github.com/environment-safe/template",
-    "description": "A template for buildless module development",
+    "homepage": "https://github.com/environment-safe/sodium",
+    "description": "buildless ESM sodium support",
     "keywords": [],
-    "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+    "author": "Abbey Hawk Sparrow <khrome>(http://abbeyhawksparrow.com)",
     "contributors": [],
     "repository": {
         "type": "git",
-        "url": "git@github.com:environment-safe/template.git"
+        "url": "git@github.com:environment-safe/sodium.git"
     },
     "bugs": {
-        "url": "https://github.com/environment-safe/template/issues"
+        "url": "https://github.com/environment-safe/sodium/issues"
     },
     "moka": {
         "firefox": {
@@ -54,7 +48,7 @@
                 "type": "webkit"
             }
         },
-        "stub": "src/stub.mjs",
+        "stub": "node_modules/@open-automaton/moka/src/stub.mjs",
         "stubs": [
             "express",
             "module",
@@ -88,6 +82,10 @@
         "test": "npm run import-test; npm run browser-test; npm run require-test",
         "import-test": "mocha test/test.mjs",
         "require-test": "mocha test/test.cjs",
+        "browserify": "browserify src/browserify.cjs >> ./dist/browserify/index.mjs",
+        "browserify-header": "cat src/fragments/output-header.fragment.mjs > ./dist/browserify/index.mjs",
+        "browserify-footer": "cat src/fragments/output-footer.fragment.mjs >> ./dist/browserify/index.mjs",
+        "build-browserify-esm": "npm run browserify-header; npm run browserify; npm run browserify-footer",
         "build-commonjs": "./node_modules/@environment-safe/commonjs-builder/bin/build.mjs",
         "local-server": "open 'http://localhost:8085/' ; npx http-server -p 8085",
         "headless-browser-test": "npm run headless-chrome-test; npm run headless-firefox-test; npm run headless-safari-test",
@@ -102,6 +100,9 @@
         "prepare": "husky install"
     },
     "dependencies": {
-        "browser-or-node": "^2.1.1"
+        "browser-or-node": "^2.1.1",
+        "browserify": "^17.0.1",
+        "sodium-javascript": "^0.8.0",
+        "sodium-universal": "^4.0.1"
     }
 }
